@@ -3,6 +3,9 @@ var amt = document.getElementById('amount');
 var desc = document.getElementById('description');
 var catg = document.getElementById('category');
 
+desc.addEventListener('input',function(){
+    desc.value = desc.value.charAt(0).toUpperCase()+desc.value.slice(1);
+});
 document.getElementById('form').addEventListener('submit',(event)=>{
     event.preventDefault();
 
