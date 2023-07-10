@@ -43,7 +43,26 @@ document.getElementById('form').addEventListener('submit',(event)=>{
     document.getElementById('form').reset();
 });
 
+let list = document.getElementById('list');
+list.querySelector('ul').innerHTML="";
 
+window.addEventListener('DOMContentLoaded',()=>{
+    axios.get('https://crudcrud.com/api/262878156ff64c8b91c7990306338d68/appointmentdata')
+    .then((response) => {for(let i=0; i<response.data.length; i++){
+        console.log(response.data[i]);
+        showUser(response.data[i]);
+    }
+    })
+    .catch((error) => console.log(error));
+    });
+
+function showUser(user){
+    const li = document.createElement('li');
+    li.classList.add('list-group-item', 'list-group-item-light', 'font-weight-bold');
+    li.innerHTML= `${user.amount} - ${user.description} - ${user.category} <button data-desc="${user.description}" class="btn btn-danger float-right py-1 delete">Delete</button><button data-desc="${user.description}" class="btn btn-primary float-right mr-3 py-1 edit">Edit</button>`
+    div.querySelector('ul').appendChild(li);
+
+}
 
 let div = document.getElementById('list');
 
