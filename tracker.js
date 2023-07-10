@@ -17,22 +17,28 @@ document.getElementById('form').addEventListener('submit',(event)=>{
 
     let updated = JSON.stringify(expense);
 
-    localStorage.setItem(expense.description, updated);
-
-    let div = document.getElementById('list');
-
-    div.querySelector('ul').innerHTML="";
-
-    for(let i=0; i<localStorage.length; i++){
-        let key = localStorage.key(i);
-        let value = localStorage.getItem(key);
-        let obj = JSON.parse(value);
-        const li = document.createElement('li');
-        li.classList.add('list-group-item', 'list-group-item-light', 'font-weight-bold');
-        li.innerHTML= `${obj.amount} - ${obj.description} - ${obj.category} <button data-desc="${obj.description}" class="btn btn-danger float-right py-1 delete">Delete</button><button data-desc="${obj.description}" class="btn btn-primary float-right mr-3 py-1 edit">Edit</button>`
-        div.querySelector('ul').appendChild(li);
-
+    axios.post('https://crudcrud.com/api/262878156ff64c8b91c7990306338d68/appointmentdata',updated,{  
+    headers: {
+        'Content-Type': 'application/json' 
     }
+    })
+    .then((message) => console.log(message))
+    .catch((error) => console.log(error));
+
+    // let div = document.getElementById('list');
+
+    // div.querySelector('ul').innerHTML="";
+
+    // for(let i=0; i<localStorage.length; i++){
+    //     let key = localStorage.key(i);
+    //     let value = localStorage.getItem(key);
+    //     let obj = JSON.parse(value);
+    //     const li = document.createElement('li');
+    //     li.classList.add('list-group-item', 'list-group-item-light', 'font-weight-bold');
+    //     li.innerHTML= `${obj.amount} - ${obj.description} - ${obj.category} <button data-desc="${obj.description}" class="btn btn-danger float-right py-1 delete">Delete</button><button data-desc="${obj.description}" class="btn btn-primary float-right mr-3 py-1 edit">Edit</button>`
+    //     div.querySelector('ul').appendChild(li);
+
+    // }
 
     document.getElementById('form').reset();
 });
