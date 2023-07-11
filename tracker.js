@@ -8,6 +8,17 @@ var editId = 0;
 desc.addEventListener('input',function(){
     desc.value = desc.value.charAt(0).toUpperCase()+desc.value.slice(1);
 });
+
+function refreshList(){
+    axios.get('https://crudcrud.com/api/f025f2a081f34b77aff33bac852c5b38/appointmentData')
+    .then((response) => {for(let i=0; i<response.data.length; i++){
+        showUser(response.data[i]);
+        console.log("Get Working");
+    }
+    })
+    .catch((error) => console.log(error));
+    };
+
 document.getElementById('form').addEventListener('submit',(event)=>{
     event.preventDefault();
 
@@ -17,18 +28,18 @@ document.getElementById('form').addEventListener('submit',(event)=>{
         category : catg.value
     }
     if(edit){        
-        axios.put(`https://crudcrud.com/api/ba6dd6cc73ee4ea194eb901ca141377a/appointmentData/${editId}`,{
+        axios.put(`https://crudcrud.com/api/f025f2a081f34b77aff33bac852c5b38/appointmentData/${editId}`,{
             amount : amt.value,
             description : desc.value,
             category : catg.value
         })
-        .then((message) => console.log(message))
+        .then(() => refreshList())
         .catch((error) => console.log(error));
     }
     else{
         let updated = JSON.stringify(expense);
 
-        axios.post('https://crudcrud.com/api/ba6dd6cc73ee4ea194eb901ca141377a/appointmentData',updated,{  
+        axios.post('https://crudcrud.com/api/f025f2a081f34b77aff33bac852c5b38/appointmentData',updated,{  
         headers: {
             'Content-Type': 'application/json' 
         }
@@ -47,7 +58,7 @@ const list = document.getElementById('list');
 list.querySelector('ul').innerHTML="";
 
 window.addEventListener('DOMContentLoaded',()=>{
-    axios.get('https://crudcrud.com/api/ba6dd6cc73ee4ea194eb901ca141377a/appointmentData')
+    axios.get('https://crudcrud.com/api/f025f2a081f34b77aff33bac852c5b38/appointmentData')
     .then((response) => {for(let i=0; i<response.data.length; i++){
         showUser(response.data[i]);
         console.log("Get Working");
@@ -66,7 +77,7 @@ function showUser(user){
 
 list.querySelector('ul').addEventListener('click', function(e){
     if(e.target.classList.contains('delete')){
-        axios.delete(`https://crudcrud.com/api/ba6dd6cc73ee4ea194eb901ca141377a/appointmentData/${e.target.getAttribute('data-id')}`)
+        axios.delete(`https://crudcrud.com/api/f025f2a081f34b77aff33bac852c5b38/appointmentData/${e.target.getAttribute('data-id')}`)
         .then(() => console.log("Deleted"))
         .catch((error) => console.log(error));
         
@@ -76,7 +87,7 @@ list.querySelector('ul').addEventListener('click', function(e){
 
 list.querySelector('ul').addEventListener('click', function(e){
     if(e.target.classList.contains('edit')){
-        axios.get(`https://crudcrud.com/api/ba6dd6cc73ee4ea194eb901ca141377a/appointmentData/${e.target.getAttribute('data-id')}`)
+        axios.get(`https://crudcrud.com/api/f025f2a081f34b77aff33bac852c5b38/appointmentData/${e.target.getAttribute('data-id')}`)
         .then((response) => {
             amt.value = response.data.amount;
             desc.value = response.data.description;
