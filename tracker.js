@@ -4,16 +4,17 @@ var desc = document.getElementById('description');
 var catg = document.getElementById('category');
 var edit = false;
 var editId = 0;
+const list = document.getElementById('list');
 
 desc.addEventListener('input',function(){
     desc.value = desc.value.charAt(0).toUpperCase()+desc.value.slice(1);
 });
 
 function refreshList(){
+    list.querySelector('ul').innerHTML="";
     axios.get('https://crudcrud.com/api/f025f2a081f34b77aff33bac852c5b38/appointmentData')
     .then((response) => {for(let i=0; i<response.data.length; i++){
         showUser(response.data[i]);
-        console.log("Get Working");
     }
     })
     .catch((error) => console.log(error));
@@ -35,6 +36,7 @@ document.getElementById('form').addEventListener('submit',(event)=>{
         })
         .then(() => refreshList())
         .catch((error) => console.log(error));
+        edit = false;
     }
     else{
         let updated = JSON.stringify(expense);
@@ -54,7 +56,6 @@ document.getElementById('form').addEventListener('submit',(event)=>{
     document.getElementById('form').reset();
 });
 
-const list = document.getElementById('list');
 list.querySelector('ul').innerHTML="";
 
 window.addEventListener('DOMContentLoaded',()=>{
