@@ -30,7 +30,7 @@ document.getElementById('form').addEventListener('submit', async (event)=>{
 
     try{
         axios.post('http://localhost:6060/data', jsondata)
-        .then(() => console.log('data saved to db'))
+        .then((result) => console.log(result.statusText))
         .catch((error) => {'error while saving data : ', error});
     }
     catch(error){
@@ -70,7 +70,5 @@ list.addEventListener('click', (e) => {
         amt.value = parseInt(listdata(text)[0]);
         desc.value = listdata(text)[1];
         catg.value = listdata(text)[2];
-        console.log(id);
-
     }
 });
