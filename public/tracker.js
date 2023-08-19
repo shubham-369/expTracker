@@ -1,6 +1,7 @@
-var amt = document.getElementById('amount');
-var desc = document.getElementById('description');
-var catg = document.getElementById('category');
+const fid = document.getElementById('id');
+const amt = document.getElementById('amount');
+const desc = document.getElementById('description');
+const catg = document.getElementById('category');
 const list = document.getElementById('list');
 
 desc.addEventListener('input',function(){
@@ -46,7 +47,30 @@ list.querySelector('ul').innerHTML="";
 function showUser(user){
     const li = document.createElement('li');
     li.classList.add('list-group-item', 'list-group-item-light', 'font-weight-bold');
-    li.innerHTML= `${user.amount} - ${user.description} - ${user.category} <a href="delete/${user.id}" class="btn btn-danger float-right py-1">Delete</a><a href="edit/${user.id}" class="btn btn-primary float-right mr-3 py-1">Edit</a>`
+    li.innerHTML= `${user.amount} - ${user.description} - ${user.category} <a href="delete/${user.id}" class="btn btn-danger float-right py-1">Delete</a><button data-id="${user.id}" class="btn btn-primary float-right mr-3 py-1 edit">Edit</button>`
     list.querySelector('ul').appendChild(li);
 
+};
+
+function listdata(list){
+    const arr = list.split('-');
+    const l = arr[arr.length-1];
+    arr.pop();
+    const categ = l.split(' ');
+    arr.push(categ[1]); 
+    return arr;
 }
+
+const edit = document.getElementsByClassName('edit');
+list.addEventListener('click', (e) => {
+    if(e.target.classList.contains('edit')){
+        const id = e.target.getAttribute('data-id');
+        const text = e.target.parentElement.textContent;
+        fid.value = id;
+        amt.value = parseInt(listdata(text)[0]);
+        desc.value = listdata(text)[1];
+        catg.value = listdata(text)[2];
+        console.log(id);
+
+    }
+});
