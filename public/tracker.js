@@ -36,8 +36,16 @@ document.getElementById('form').addEventListener('submit', async (event)=>{
     catch(error){
         console.log(`error while posting data : ${error}`)
     };
-
-  
+    
+    list.querySelector('ul').innerHTML="";
+    axios.get('http://localhost:6060/form')
+        .then((response) => {
+            for(let i = 0; i < response.data.length; i++){
+                showUser(response.data[i]);
+        }
+        })
+        .catch((error) => console.log(error));
+     
     document.getElementById('form').reset();
 });
 
